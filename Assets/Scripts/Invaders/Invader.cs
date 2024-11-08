@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class Invader : MonoBehaviour
 {
-    public Sprite[] animationSprites;
-    public float animationTime = 1.0f;
+    public InvaderData invaderData; // Scriptable Object referansı
 
-    //References
     private SpriteRenderer _spriteRenderer;
     private int _animationFrame;
-
 
     void Awake() 
     {
@@ -19,18 +16,18 @@ public class Invader : MonoBehaviour
 
     void Start() 
     {
-        InvokeRepeating(nameof(AnimateSprite), this.animationTime, this.animationTime);    
+        InvokeRepeating(nameof(AnimateSprite), invaderData.animationTime, invaderData.animationTime);    
     }
 
     private void AnimateSprite()
     {
         _animationFrame++;
 
-        if (_animationFrame >= this.animationSprites.Length)
+        if (_animationFrame >= invaderData.animationSprites.Length)
         {
             _animationFrame = 0;
         }
 
-        _spriteRenderer.sprite = this.animationSprites[_animationFrame];
+        _spriteRenderer.sprite = invaderData.animationSprites[_animationFrame];
     }
 }

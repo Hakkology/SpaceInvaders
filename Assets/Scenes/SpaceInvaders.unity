@@ -329,6 +329,62 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 30, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &244669408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244669410}
+  - component: {fileID: 244669409}
+  m_Layer: 0
+  m_Name: Invaders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &244669409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244669408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b735bde590fe504439be47292dad8af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 4957866452809227062, guid: 407e6ebb6056f9f4ebaafc958df93371, type: 3}
+  - {fileID: 637337218612849119, guid: 20873209ef577bc4abae4fc5a6243dc7, type: 3}
+  - {fileID: 637337218612849119, guid: 20873209ef577bc4abae4fc5a6243dc7, type: 3}
+  - {fileID: 8764197475256693874, guid: a516f906045b78d41947431ea8f246b3, type: 3}
+  - {fileID: 8764197475256693874, guid: a516f906045b78d41947431ea8f246b3, type: 3}
+  rows: 5
+  columns: 11
+  rowSpan: 2.2
+  columnSpan: 2.5
+  gridOffset: 6
+  speed: 2
+--- !u!4 &244669410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244669408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.825521, y: 2.8023636, z: -0.031689867}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &267732288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,3 +1281,4 @@ SceneRoots:
   - {fileID: 267732289}
   - {fileID: 1865733447}
   - {fileID: 1981674538}
+  - {fileID: 244669410}

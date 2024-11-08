@@ -25,6 +25,10 @@ PrefabInstance:
       value: Invader_Base Variant 2
       objectReference: {fileID: 0}
     - target: {fileID: 4828498929395088338, guid: 533382528e25da145b0168f5a7c5f9d4, type: 3}
+      propertyPath: invaderData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7bf78653c12ee0e4f8d73838b8c7dc44, type: 2}
+    - target: {fileID: 4828498929395088338, guid: 533382528e25da145b0168f5a7c5f9d4, type: 3}
       propertyPath: animationSprites.Array.size
       value: 2
       objectReference: {fileID: 0}
