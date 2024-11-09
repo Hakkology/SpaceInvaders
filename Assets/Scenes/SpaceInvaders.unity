@@ -1089,6 +1089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   projectileDirection: {x: 0, y: 1, z: 0}
+  invaderGrid: {fileID: 244669409}
 --- !u!1 &1797099445
 GameObject:
   m_ObjectHideFlags: 0

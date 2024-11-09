@@ -4,6 +4,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 5.0f;
     public Vector3 projectileDirection = Vector3.up; // Mermi yönü
+    public InvaderGrid invaderGrid;
 
     void Update() 
     {
@@ -32,6 +33,18 @@ public class Player : MonoBehaviour
         {
             laser.transform.position = this.transform.position; // Mermiyi oyuncunun pozisyonuna ayarlıyoruz
             laser.direction = projectileDirection; // Merminin yönünü ayarlıyoruz
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Invader") ||
+            other.gameObject.layer == LayerMask.NameToLayer("Missile"))
+        {
+            if (invaderGrid != null)
+            {
+                invaderGrid.RestartGame();
+            }
         }
     }
 }

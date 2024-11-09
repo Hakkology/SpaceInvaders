@@ -36,6 +36,17 @@ public class InvaderGrid : MonoBehaviour
 
     void Awake() 
     {
+        InitializeInvaders();
+    }
+
+    void Start() 
+    {
+        InvokeRepeating(nameof(MissileAttack), this.missileAttackRate, this.missileAttackRate);
+    }
+
+    private void InitializeInvaders()
+    {
+        amountKilled = 0;
         _leftMostInvaders = new List<Transform>();
         _rightMostInvaders = new List<Transform>();
 
@@ -55,18 +66,12 @@ public class InvaderGrid : MonoBehaviour
                 invader.transform.position = position;
                 invader._killed += OnInvaderKilled;
 
-                // Sol ve sağ invader'ları listeye ekle
                 if (col == 0)
                     _leftMostInvaders.Add(invader.transform);
                 else if (col == columns - 1)
                     _rightMostInvaders.Add(invader.transform);
             }
         }
-    }
-
-    void Start() 
-    {
-        InvokeRepeating(nameof(MissileAttack), this.missileAttackRate, this.missileAttackRate);
     }
 
     void Update() 
@@ -146,5 +151,22 @@ public class InvaderGrid : MonoBehaviour
     private void OnInvaderKilled()
     {
         this.amountKilled++;
+
+        if (this.amountKilled >= this.totalInvaders)
+        {
+            InitializeInvaders();
+        }
+    }
+
+    public void RestartGame()
+    {
+        // Tüm düşmanları temizle
+        foreach (Transform child in this.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        // Düşmanları yeniden başlat
+        InitializeInvaders();
     }
 }
