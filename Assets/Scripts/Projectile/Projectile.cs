@@ -1,9 +1,10 @@
-using System;
 using UnityEngine;
+using System;
 
-public class Projectile : MonoBehaviour {
-    
-    public Action destroyed;
+public class Projectile : MonoBehaviour 
+{
+    public Action<Projectile> OnDestroyed; // Action tanımlama
+
     public Vector3 direction;
     public float speed;
 
@@ -14,9 +15,6 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        this.destroyed.Invoke();
-        Destroy(this.gameObject);
+        OnDestroyed?.Invoke(this); // Action tetikleniyor
     }
-
 }
-

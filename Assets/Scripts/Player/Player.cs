@@ -1,14 +1,13 @@
-using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour 
 {
     public float speed = 5.0f;
-    public Projectile laserPrefab;
-    private bool _laserActive;
+    public Vector3 projectileDirection = Vector3.up; // Mermi yönü
 
     void Update() 
     {
+        // Hareket kontrolü
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             this.transform.position += Vector3.left * this.speed * Time.deltaTime;
@@ -18,6 +17,7 @@ public class Player : MonoBehaviour
             this.transform.position += Vector3.right * this.speed * Time.deltaTime;
         }
 
+        // Ateş etme kontrolü
         if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Shoot();
@@ -26,17 +26,12 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        if (!_laserActive)
+        // Havuzdan mermi alıyoruz
+        Projectile laser = ProjectilePool.Instance.GetFromPool();
+        if (laser != null)
         {
-            Projectile laser =  Instantiate(this.laserPrefab, this.transform.position, Quaternion.identity);
-            laser.destroyed += LaserReset;
-            _laserActive = true;
+            laser.transform.position = this.transform.position; // Mermiyi oyuncunun pozisyonuna ayarlıyoruz
+            laser.direction = projectileDirection; // Merminin yönünü ayarlıyoruz
         }
-
-    }
-
-    private void LaserReset()
-    {
-        _laserActive = false;
     }
 }
