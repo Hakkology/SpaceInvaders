@@ -132,12 +132,16 @@ public class InvaderGrid : MonoBehaviour
             
             if (Random.value < (1.0f / (float)this.amountAlive))
             {
-                Projectile missile = Instantiate(this.InvaderMissile, invader.position, Quaternion.identity);
+                Projectile missile = MissilePool.Instance.GetFromPool();
+                if (missile != null)
+                {
+                    missile.transform.position = invader.position; // Pozisyonu invader'a ayarla
+                    missile.gameObject.SetActive(true); // Mermiyi aktif hale getir
+                }
                 break;
             }
         }
     }
-
 
     private void OnInvaderKilled()
     {

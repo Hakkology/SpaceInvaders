@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     private void Shoot()
     {
         // Havuzdan mermi alıyoruz
-        Projectile laser = ProjectilePool.Instance.GetFromPool();
+        Projectile laser = LaserPool.Instance.GetFromPool();
         if (laser != null)
         {
             laser.transform.position = this.transform.position; // Mermiyi oyuncunun pozisyonuna ayarlıyoruz
