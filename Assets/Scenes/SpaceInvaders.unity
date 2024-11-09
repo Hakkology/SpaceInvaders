@@ -369,7 +369,10 @@ MonoBehaviour:
   rowSpan: 2.2
   columnSpan: 2.5
   gridOffset: 6
-  speed: 2
+  minSpeed: 0.5
+  maxSpeed: 2.5
+  InvaderMissile: {fileID: -5613701218607273887, guid: 6b151e9c22b65a6929e543a75d93fe33, type: 3}
+  missileAttackRate: 1
 --- !u!4 &244669410
 Transform:
   m_ObjectHideFlags: 0
