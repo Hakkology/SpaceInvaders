@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Invader : MonoBehaviour
@@ -8,6 +7,8 @@ public class Invader : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private int _animationFrame;
+
+    public Action _killed;
 
     void Awake() 
     {
@@ -29,5 +30,14 @@ public class Invader : MonoBehaviour
         }
 
         _spriteRenderer.sprite = invaderData.animationSprites[_animationFrame];
+    }
+
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Laser"))
+        {
+            this._killed.Invoke();
+            gameObject.SetActive(false);
+        }
     }
 }

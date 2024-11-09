@@ -11,7 +11,14 @@ public class InvaderGrid : MonoBehaviour
     public float gridOffset = 3.0f;
 
     private Vector3 _direction = Vector3.right;
-    public float speed = 2.0f;
+    private float speed;
+    public float minSpeed = .5f;
+    public float maxSpeed = 2.5f;
+
+
+    public int amountKilled { get; private set; }
+    public int totalInvaders => this.rows * this.columns;
+    public float percentKilled => (float)this.amountKilled / (float)this.totalInvaders;
 
     private List<Transform> _leftMostInvaders;
     private List<Transform> _rightMostInvaders;
@@ -35,6 +42,7 @@ public class InvaderGrid : MonoBehaviour
                 Vector3 position = rowPosition;
                 position.x += col * rowSpan;
                 invader.transform.position = position;
+                invader._killed += OnInvaderKilled;
 
                 // Sol ve sağ invader'ları listeye ekle
                 if (col == 0)
@@ -47,6 +55,8 @@ public class InvaderGrid : MonoBehaviour
 
     void Update() 
     {
+        this.speed = Mathf.Lerp(minSpeed, maxSpeed, percentKilled);
+
         this.transform.position += _direction * this.speed * Time.deltaTime;
         Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
@@ -95,5 +105,10 @@ public class InvaderGrid : MonoBehaviour
         Vector3 position = this.transform.position;
         position.y -= 1.0f;
         this.transform.position = position;
+    }
+
+    private void OnInvaderKilled()
+    {
+        this.amountKilled++;
     }
 }
