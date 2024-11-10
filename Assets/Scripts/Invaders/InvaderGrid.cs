@@ -4,13 +4,9 @@ using System.Collections.Generic;
 public class InvaderGrid : MonoBehaviour 
 {
     // düşman oluşturma gridi
-    [Header("Enemy Spawn Grid")]
-    public Invader[] prefabs;
-    public int rows = 5;
-    public int columns = 11;
-    public float rowSpan = 2.0f;
-    public float columnSpan = 2.0f;
-    public float gridOffset = 3.0f;
+    [Header("Invader Grid Configurations")]
+    public List<InvaderGridData> gridDataList; // Liste halinde chapter verileri
+    private int currentChapterIndex = 0; // Şu anki chapter
 
 
     // düşman hızları
@@ -28,8 +24,9 @@ public class InvaderGrid : MonoBehaviour
 
     public int amountKilled { get; private set; }
     public int amountAlive => this.totalInvaders - this.amountKilled;
-    public int totalInvaders => this.rows * this.columns;
+    public int totalInvaders => gridDataList[currentChapterIndex].rows * gridDataList[currentChapterIndex].columns;
     public float percentKilled => (float)this.amountKilled / (float)this.totalInvaders;
+
 
     private List<Transform> _leftMostInvaders;
     private List<Transform> _rightMostInvaders;
@@ -46,29 +43,30 @@ public class InvaderGrid : MonoBehaviour
 
     private void InitializeInvaders()
     {
+        var gridData = gridDataList[currentChapterIndex]; // Şu anki chapter verisini al
         amountKilled = 0;
         _leftMostInvaders = new List<Transform>();
         _rightMostInvaders = new List<Transform>();
 
-        for (int row = 0; row < this.rows; row++)
+        for (int row = 0; row < gridData.rows; row++)
         {
-            float width = rowSpan * (this.columns - 1);
-            float height = columnSpan * (this.rows - 1);
+            float width = gridData.rowSpan * (gridData.columns - 1);
+            float height = gridData.columnSpan * (gridData.rows - 1);
 
             Vector2 centering = new Vector2(-width / 2, -height / 2);
-            Vector3 rowPosition = new Vector3(centering.x, centering.y + gridOffset + row * columnSpan, 0.0f);
+            Vector3 rowPosition = new Vector3(centering.x, centering.y + gridData.gridOffset + row * gridData.columnSpan, 0.0f);
 
-            for (int col = 0; col < this.columns; col++)
+            for (int col = 0; col < gridData.columns; col++)
             {
-                Invader invader = Instantiate(this.prefabs[row], this.transform);
+                Invader invader = Instantiate(gridData.prefabs[row % gridData.prefabs.Length], this.transform);
                 Vector3 position = rowPosition;
-                position.x += col * rowSpan;
+                position.x += col * gridData.rowSpan;
                 invader.transform.position = position;
                 invader._killed += OnInvaderKilled;
 
                 if (col == 0)
                     _leftMostInvaders.Add(invader.transform);
-                else if (col == columns - 1)
+                else if (col == gridData.columns - 1)
                     _rightMostInvaders.Add(invader.transform);
             }
         }
@@ -152,10 +150,22 @@ public class InvaderGrid : MonoBehaviour
     {
         this.amountKilled++;
 
-        if (this.amountKilled >= this.totalInvaders)
+
+        if (amountKilled >= totalInvaders)
         {
-            InitializeInvaders();
+            AdvanceToNextChapter(); 
         }
+    }
+
+    private void AdvanceToNextChapter()
+    {
+        currentChapterIndex++;
+        if (currentChapterIndex >= gridDataList.Count)
+        {
+            currentChapterIndex = 0; 
+        }
+
+        RestartGame();
     }
 
     public void RestartGame()
@@ -168,5 +178,11 @@ public class InvaderGrid : MonoBehaviour
         
         // Düşmanları yeniden başlat
         InitializeInvaders();
+    }
+
+    public void ResetGame()
+    {
+        currentChapterIndex = 0; // Chapter index'i sıfırla
+        RestartGame(); // Düşmanları baştan oluştur
     }
 }
